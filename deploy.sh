@@ -1,15 +1,15 @@
 # Navigate to your project directory
 
-cd /var/project/nodejsapp
+cd /var/projects/nodejsapp
 
 # Navigate to your project jenkins/workspace/ directory
 cd /var/lib/jenkins/workspace/nodeapp
 
 # Copy files using rsync
-cp * -r /var/project/nodejsapp
+cp * -r /var/projects/nodejsapp
 
 # Navigate to your project directory
-cd /var/project/nodejsapp
+cd /var/projects/nodejsapp
 
 # Find the process ID (PID) using port 3000
 PID=$(lsof -t -i:3000)
@@ -20,7 +20,7 @@ if [ -n "$PID" ]; then
 fi
 
 # Navigate to your project directory
-cd /var/project/nodejsapp
+cd /var/projects/nodejsapp
 
 # stop pm2 process
 pm2 stop ecosystem.config.js
