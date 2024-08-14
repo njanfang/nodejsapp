@@ -1,42 +1,37 @@
-# Navigate to your project directory
+#!/bin/bash
 
-cd /var/projects/nodejsapp
 
-# Navigate to your project jenkins/workspace/ directory
-cd /var/lib/jenkins/workspace/nodeapp
+#navigate to the directy of jenkins workspace
 
-# Copy files using rsync
-cp * -r /var/projects/nodejsapp
 
-# Navigate to your project directory
-cd /var/projects/nodejsapp
+#copy to project dir
+cp -r /var/nodeapp/nodejsapp /var/nodeapp/new_nodejsapp
 
-# Find the process ID (PID) using port 3000
-PID=$(lsof -t -i:3000)
 
-# If the PID is not empty, kill the process
+#navigate to dir
+
+cd /var/nodeapp
+
+#find the process pid of instance 3000
+
+PID=$(lsof -t -i :3000)
+
+#if the pid not empty the kill it
 if [ -n "$PID" ]; then
-  su -c "kill -9 $PID" -s /bin/bash root
+    su -c "kill -9 $PID" -s /bin/bash root
 fi
 
-# Navigate to your project directory
-cd /var/projects/nodejsapp
-
-# stop pm2 process
+#stop the pm2 process
 pm2 stop ecosystem.config.js
 
-# install node dependency
-npm install express
+#install nodejs
 
-# Run the deploy script
-sudo npm run dev
+npm install
 
-# Find the process ID (PID) using port 3000
-PID=$(lsof -t -i:3000)
+#start app with pm2
 
-# You may want to check if the process is still running after the deploy
-if [ -n "$PID" ]; then
-  echo "The process is still running with PID $PID."
-else
-  echo "Deployment successful.  process running on port 3000."
-fi
+pm2 start ecosystem.config.js
+
+#output
+
+echo "the deployment is successfully , running on port 3000 with new pid of instance & pm2 "
